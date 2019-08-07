@@ -1,11 +1,12 @@
 import React from 'react';
-// import styled from 'styled-components';
-import { Button as Btn } from 'rebass';
+import styled from 'styled-components';
+import { Button as BtnBase } from 'rebass';
 
 interface BtnProps {
   color: string;
   text: string;
   size: number;
+  type: string;
 }
 
 const Button: React.FC<BtnProps> = (props: BtnProps) => {
@@ -24,3 +25,15 @@ const Button: React.FC<BtnProps> = (props: BtnProps) => {
 };
 
 export default Button;
+
+const Btn = styled(BtnBase)`
+  transition: background-color 0.1s ease-out, color 0.1s ease-out;
+
+  &:hover {
+    background-color: white !important;
+    //border: -1px solid #e10197;
+    //border-spacing: ;
+    color: #e10197;
+    cursor: pointer;
+  }
+`;
