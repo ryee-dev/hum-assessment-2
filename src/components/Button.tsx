@@ -7,16 +7,17 @@ interface BtnProps {
   text: string;
   size: number;
   type: string;
+  onClick?: Function;
 }
 
 const Button: React.FC<BtnProps> = (props: BtnProps) => {
   const { color, text, size } = props;
   return (
     <Btn
-      my={2}
+      m={2}
       style={{
         backgroundColor: color === 'primary' ? '#e10197' : '#999999',
-        padding: `${size / 2}rem ${size}rem`,
+        padding: `${size / 4}rem ${size/2}rem`,
       }}
     >
       {text}

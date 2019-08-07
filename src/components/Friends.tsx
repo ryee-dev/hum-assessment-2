@@ -1,24 +1,28 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Flex } from 'rebass';
+// import Button from './Button';
 
 interface FriendProps {
   name: string;
   age: number;
   friends: string[];
+  setFriends: Function;
+  friendName: string;
 }
 
 const Friends: React.FC<FriendProps> = (props: FriendProps) => {
-  const { name, age, friends } = props;
+  const { friends } = props;
 
-  console.log(name, age, friends);
+  // console.log(name, age, friends);
 
   return (
     <FriendsContainer>
       {friends && (
         <ul>
-          <li>{name}</li>
-          <li>{age}</li>
+          {friends.map(name => (
+            <li>{name}</li>
+          ))}
         </ul>
       )}
     </FriendsContainer>

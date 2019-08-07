@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Flex } from 'rebass';
-import Button from './Button';
+// import Button from './Button';
 
 interface FormProps {
   setName: Function;
@@ -18,14 +18,7 @@ interface FormProps {
   // };
 }
 const Form: React.FC<FormProps> = (props: FormProps) => {
-  const {
-    setName,
-    setAge,
-    setFriends,
-    setFriendName,
-    friends,
-    friendName,
-  } = props;
+  const { setName, setAge, setFriends, friends, friendName } = props;
   // const { name, age, friends } = data;
 
   const handleNameInput = (e: { target: { value: string } }) => {
@@ -34,10 +27,6 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
 
   const handleAgeInput = (e: { target: { value: number } }) => {
     setAge(e.target.value);
-  };
-
-  const handleFriendName = (e: { target: { value: string } }) => {
-    setFriendName(e.target.value);
   };
 
   const handleSubmit = () => {
@@ -68,26 +57,14 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
             />
           </div>
         </div>
-        <div className="row">
-          <div className="column">
-            <label>Friend Name:</label>
-            <input
-              name="friend-A"
-              type="string"
-              placeholder="friend"
-              onChange={handleFriendName}
-            />
-          </div>
-        </div>
       </InputContainer>
-      <Button type="submit" color="primary" size={1} text="Submit" />
     </FormContainer>
   );
 };
 
 export default Form;
 
-const FormContainer = styled.form`
+const FormContainer = styled(Flex)`
   display: flex;
   max-width: 800px;
   max-height: 600px;
@@ -104,27 +81,5 @@ const InputContainer = styled(Flex)`
   justify-content: center;
   flex-direction: column;
 
-  div {
-    display: flex;
-    width: 100%;
-
-    &.row {
-      //width: 100%;
-      margin-bottom: 0.6rem;
-      align-items: flex-start;
-      justify-content: center;
-    }
-
-    &.column {
-      align-items: flex-start;
-      justify-content: space-evenly;
-      flex-direction: column;
-      //margin: 0 0.4rem;
-    }
-  }
-
-  input {
-    margin: 0.4rem 0;
-    padding: 0.4rem;
-  }
+  
 `;
