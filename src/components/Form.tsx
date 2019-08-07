@@ -6,8 +6,18 @@ import Button from './Button';
 const Form = () => {
   return (
     <FormContainer>
-      <label>Name</label>
-      <input type="text" placeholder="Name" />
+      <InputContainer>
+        <div className="row">
+          <div className="column" style={{ marginRight: '1rem' }}>
+            <label>Name</label>
+            <input type="text" placeholder="Name" />
+          </div>
+          <div className="column">
+            <label>Age</label>
+            <input type="number" placeholder="Age" />
+          </div>
+        </div>
+      </InputContainer>
       <Button color="primary" size={1} text="Submit" />
     </FormContainer>
   );
@@ -24,4 +34,31 @@ const FormContainer = styled(Flex)`
   align-items: flex-start;
   justify-content: space-evenly;
   flex-direction: column;
+`;
+
+const InputContainer = styled(Flex)`
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  div {
+    display: flex;
+
+    &.row {
+      align-items: flex-start;
+      justify-content: center;
+    }
+
+    &.column {
+      align-items: flex-start;
+      justify-content: space-evenly;
+      flex-direction: column;
+      //margin: 0 0.4rem;
+    }
+  }
+
+  input {
+    margin: 0.4rem 0;
+    padding: 0.4rem;
+  }
 `;
