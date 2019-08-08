@@ -2,11 +2,15 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Flex } from 'rebass';
 import './App.css';
-import Form from './components/Form';
-import Friends from './components/Friends';
+// import Form from './components/Form';
+// import Friends from './components/Friends';
+import SlideA from './views/SlideA';
+import SlideB from './views/SlideB';
+import SlideC from './views/SlideC';
 // import Button from './components/Button';
 
 const App = () => {
+  const [slide, setSlide] = useState(1);
   const [data, setData] = useState({
     name: '',
     age: 0,
@@ -29,26 +33,27 @@ const App = () => {
   const handleAddFriend = () => {
     // @ts-ignore
     setFriends([...friends, friendName]);
+    setFriendName('');
+    // console.log('friends:', friends);
   };
 
   const handleSubmitForm = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     setTimeout(() => {
+      setSlide(slide + 1);
       setIsSubmitted(true);
+      // setFriends(friends);
+      setData({
+        name: name,
+        age: age,
+        friends,
+      });
     }, 1000);
     // setIsSubmitted(true);
   };
 
   useEffect(() => {
-    // setTimeout(
-    //   setData({
-    //     name: name,
-    //     age: age,
-    //     friends,
-    //   }),
-    //   2000
-    // );
-    // setFriends(friends);
+    // setFriends([...friends]);
 
     setData({
       name: name,
@@ -56,60 +61,45 @@ const App = () => {
       friends,
     });
 
-    console.log('friends:', data.friends);
-    setFriendName('');
-
-    // setFriends(data.friends);
-  }, [name, age, friends]);
+    console.log('data.friends:', data.friends);
+  }, []);
 
   return (
     <AppShell className="App">
-      <h1>test</h1>
-      <FormContainer>
-        <Form setName={setName} setAge={setAge} />
-        <hr />
-
-        <label>Friend Name:</label>
-        <div className="row">
-          <input
-            name="friend-A"
-            type="string"
-            placeholder="friend"
-            onChange={handleFriendName}
-            value={friendName}
+      <SlideWrapper>
+        {slide === 1 && (
+          <SlideA
+            setAge={setAge}
+            setName={setName}
+            setSlide={setSlide}
+            slide={slide}
+            name={name}
+            age={age}
           />
-          <button onClick={handleAddFriend} disabled={!friendName}>
-            +
-          </button>
-        </div>
-        <Friends
-          friends={friends}
-          setFriends={setFriends}
-          friendName={friendName}
-          setData={setData}
-        />
+        )}
 
-        {/*<Button size={1} color="primary" text="Add Friend" type="button" onClick={handleAddFriend} />*/}
-        <button type="submit" onClick={handleSubmitForm}>
-          submit
-        </button>
-      </FormContainer>
+        {slide === 2 && (
+          <SlideB
+            friendName={friendName}
+            handleAddFriend={handleAddFriend}
+            handleFriendName={handleFriendName}
+            handleSubmitForm={handleSubmitForm}
+            friends={friends}
+            setFriends={setFriends}
+            setData={setData}
+          />
+        )}
 
-      {name && age && isSubmitted && (
-        <Flex
-          alignItems="center"
-          justifyContent="center"
-          flexDirection="column"
-        >
-          <p>name: {name}</p>
-          <p>age: {age}</p>
-          {friends.map(friend => (
-            <div className="row">
-              <p>{friend}</p>
-            </div>
-          ))}
-        </Flex>
-      )}
+        {slide === 3 && (
+          <SlideC
+            name={name}
+            friends={friends}
+            age={age}
+            isSubmitted={isSubmitted}
+            setSlide={setSlide}
+          />
+        )}
+      </SlideWrapper>
     </AppShell>
   );
 };
@@ -118,6 +108,8 @@ export default App;
 
 const AppShell = styled(Flex)`
   width: 100%;
+  height: 100vh;
+  overflow: hidden;
   //max-width: 500px;
 
   align-items: center;
@@ -126,33 +118,10 @@ const AppShell = styled(Flex)`
   flex-direction: column;
 `;
 
-const FormContainer = styled.div`
-  display: flex;
+const SlideWrapper = styled(Flex)`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-
-  div {
-    display: flex;
-    width: 100%;
-
-    &.row {
-      //width: 100%;
-      margin-bottom: 0.6rem;
-      align-items: center;
-      justify-content: center;
-    }
-
-    &.column {
-      align-items: flex-start;
-      justify-content: space-evenly;
-      flex-direction: column;
-      //margin: 0 0.4rem;
-    }
-  }
-
-  input {
-    margin: 0.4rem 0;
-    padding: 0.4rem;
-  }
+  height: 100%;
+  width: 100%;
 `;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { Flex } from 'rebass';
 // import Button from './Button';
@@ -6,46 +6,29 @@ import { Flex } from 'rebass';
 interface FriendProps {
   friends: string[];
   setFriends: Function;
-  friendName: string;
   setData: Function;
-  // handleRemoveFriend: Function;
+  friendName: string;
 }
 
 const Friends: React.FC<FriendProps> = (props: FriendProps) => {
-  const { friends, friendName, setData } = props;
-  // console.log(name, age, friends);
-  const [updatedFriends, setUpdatedFriends] = useState([]);
+  const { friends, setFriends } = props;
 
-  const handleRemoveFriend = () => {
-    // const newFriends
-
-    setUpdatedFriends(
-      // @ts-ignore
-      friends.splice(friends.findIndex(i => friends[i] === friendName), 1)
-    );
-    // setFriends(updatedFriends);
-    setData({
-      friends: updatedFriends,
-    });
-    // console.log(friends);
+  const handleRemoveFriend = (name: string) => {
+    setFriends(friends.filter(friend => friend !== name));
   };
 
   useEffect(() => {
-    // console.log(friends.length);
-  }, [friends, updatedFriends]);
+    console.log(friends);
+  }, []);
 
   return (
     <FriendsContainer>
       {friends && (
         <ul>
-          {friends.map(name => (
-            <div>
+          {friends.map((name, i) => (
+            <div key={i}>
               <li>{name}</li>
-              <button
-                // @ts-ignore
-                onClick={() => handleRemoveFriend()}
-                type="button"
-              >
+              <button onClick={() => handleRemoveFriend(name)} type="button">
                 -
               </button>
             </div>
