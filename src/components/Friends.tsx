@@ -1,18 +1,38 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Flex } from 'rebass';
 // import Button from './Button';
 
 interface FriendProps {
   friends: string[];
-  handleRemoveFriend: Function;
+  setFriends: Function;
+  friendName: string;
+  setData: Function;
+  // handleRemoveFriend: Function;
 }
 
 const Friends: React.FC<FriendProps> = (props: FriendProps) => {
-  const { friends, handleRemoveFriend } = props;
+  const { friends, friendName, setData } = props;
   // console.log(name, age, friends);
+  const [updatedFriends, setUpdatedFriends] = useState([]);
 
-  useEffect(() => {}, [friends]);
+  const handleRemoveFriend = () => {
+    // const newFriends
+
+    setUpdatedFriends(
+      // @ts-ignore
+      friends.splice(friends.findIndex(i => friends[i] === friendName), 1)
+    );
+    // setFriends(updatedFriends);
+    setData({
+      friends: updatedFriends,
+    });
+    // console.log(friends);
+  };
+
+  useEffect(() => {
+    // console.log(friends.length);
+  }, [friends, updatedFriends]);
 
   return (
     <FriendsContainer>

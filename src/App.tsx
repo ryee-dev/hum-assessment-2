@@ -29,7 +29,6 @@ const App = () => {
   const handleAddFriend = () => {
     // @ts-ignore
     setFriends([...friends, friendName]);
-    setFriendName('');
   };
 
   const handleSubmitForm = (e: { preventDefault: () => void }) => {
@@ -37,20 +36,10 @@ const App = () => {
     setTimeout(() => {
       setIsSubmitted(true);
     }, 1000);
-    setIsSubmitted(true);
-  };
-
-  const handleRemoveFriend = () => {
-    const newFriends = friends.splice(
-      friends.findIndex(i => friends[i] === friendName),
-      1
-    );
-    setFriends(newFriends);
-    console.log(friends);
+    // setIsSubmitted(true);
   };
 
   useEffect(() => {
-    // console.log('data:', data);
     // setTimeout(
     //   setData({
     //     name: name,
@@ -59,12 +48,18 @@ const App = () => {
     //   }),
     //   2000
     // );
+    // setFriends(friends);
 
     setData({
       name: name,
       age: age,
       friends,
     });
+
+    console.log('friends:', data.friends);
+    setFriendName('');
+
+    // setFriends(data.friends);
   }, [name, age, friends]);
 
   return (
@@ -88,8 +83,10 @@ const App = () => {
           </button>
         </div>
         <Friends
-          friends={data.friends}
-          handleRemoveFriend={handleRemoveFriend}
+          friends={friends}
+          setFriends={setFriends}
+          friendName={friendName}
+          setData={setData}
         />
 
         {/*<Button size={1} color="primary" text="Add Friend" type="button" onClick={handleAddFriend} />*/}
