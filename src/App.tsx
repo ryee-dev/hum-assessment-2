@@ -4,7 +4,7 @@ import { Flex } from 'rebass';
 import './App.css';
 import Form from './components/Form';
 import Friends from './components/Friends';
-import Button from './components/Button';
+// import Button from './components/Button';
 
 const App = () => {
   const [data, setData] = useState({
@@ -29,43 +29,42 @@ const App = () => {
   const handleAddFriend = () => {
     // @ts-ignore
     setFriends([...friends, friendName]);
+    setFriendName('');
   };
 
   const handleSubmitForm = (e: { preventDefault: () => void }) => {
     e.preventDefault();
+    setTimeout(() => {
+      setIsSubmitted(true);
+    }, 1000);
     setIsSubmitted(true);
   };
 
   useEffect(() => {
     console.log('data:', data);
-    setTimeout(
-      setData({
-        name: name,
-        age: age,
-        friends,
-      }),
-      1000
-    );
+    // setTimeout(
+    //   setData({
+    //     name: name,
+    //     age: age,
+    //     friends,
+    //   }),
+    //   2000
+    // );
+
+    setData({
+      name: name,
+      age: age,
+      friends,
+    });
   }, [name, age, friends]);
 
   return (
     <AppShell className="App">
       <h1>test</h1>
-      <FormContainer onSubmit={handleSubmitForm}>
-        <Form
-          setName={setName}
-          setAge={setAge}
-          setFriends={setFriends}
-          setFriendName={setFriendName}
-          friendName={friendName}
-          friends={friends}
-        />
+      <FormContainer>
+        <Form setName={setName} setAge={setAge} />
         <hr />
 
-        {/*<Button size={1} color="primary" text="Add Friend" type="button" onClick={handleAddFriend} />*/}
-        <Button type="submit" color="primary" size={1} text="Submit" />
-      </FormContainer>
-      <div>
         <label>Friend Name:</label>
         <div className="row">
           <input
@@ -77,7 +76,13 @@ const App = () => {
           />
           <button onClick={handleAddFriend}>+</button>
         </div>
-      </div>
+        <Friends friends={data.friends} />
+
+        {/*<Button size={1} color="primary" text="Add Friend" type="button" onClick={handleAddFriend} />*/}
+        <button type="submit" onClick={handleSubmitForm}>
+          submit
+        </button>
+      </FormContainer>
 
       {name && age && isSubmitted && (
         <Flex
@@ -87,13 +92,7 @@ const App = () => {
         >
           <p>name: {name}</p>
           <p>age: {age}</p>
-          <Friends
-            name={data.name}
-            age={data.age}
-            friends={data.friends}
-            friendName={friendName}
-            setFriends={setFriends}
-          />
+          { friends.map(friend => <p>{friend}</p>) }
         </Flex>
       )}
     </AppShell>
@@ -112,7 +111,7 @@ const AppShell = styled(Flex)`
   flex-direction: column;
 `;
 
-const FormContainer = styled.form`
+const FormContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;

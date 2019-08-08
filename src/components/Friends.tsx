@@ -4,11 +4,7 @@ import { Flex } from 'rebass';
 // import Button from './Button';
 
 interface FriendProps {
-  name: string;
-  age: number;
   friends: string[];
-  setFriends: Function;
-  friendName: string;
 }
 
 const Friends: React.FC<FriendProps> = (props: FriendProps) => {

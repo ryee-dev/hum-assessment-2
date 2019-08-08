@@ -6,10 +6,6 @@ import { Flex } from 'rebass';
 interface FormProps {
   setName: Function;
   setAge: Function;
-  setFriends: Function;
-  setFriendName: Function;
-  friends: string[];
-  friendName: string;
   // setData: Function;
   // data: {
   //   name: string,
@@ -18,7 +14,7 @@ interface FormProps {
   // };
 }
 const Form: React.FC<FormProps> = (props: FormProps) => {
-  const { setName, setAge, setFriends, friends, friendName } = props;
+  const { setName, setAge } = props;
   // const { name, age, friends } = data;
 
   const handleNameInput = (e: { target: { value: string } }) => {
@@ -29,12 +25,8 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
     setAge(e.target.value);
   };
 
-  const handleSubmit = () => {
-    setFriends(friends.push(friendName));
-  };
-
   return (
-    <FormContainer onSubmit={handleSubmit}>
+    <FormContainer>
       <InputContainer>
         <div className="row">
           <div className="column" style={{ marginRight: '1rem' }}>
@@ -80,6 +72,4 @@ const InputContainer = styled(Flex)`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-
-  
 `;
