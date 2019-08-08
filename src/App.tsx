@@ -40,8 +40,17 @@ const App = () => {
     setIsSubmitted(true);
   };
 
+  const handleRemoveFriend = () => {
+    const newFriends = friends.splice(
+      friends.findIndex(i => friends[i] === friendName),
+      1
+    );
+    setFriends(newFriends);
+    console.log(friends);
+  };
+
   useEffect(() => {
-    console.log('data:', data);
+    // console.log('data:', data);
     // setTimeout(
     //   setData({
     //     name: name,
@@ -74,9 +83,14 @@ const App = () => {
             onChange={handleFriendName}
             value={friendName}
           />
-          <button onClick={handleAddFriend}>+</button>
+          <button onClick={handleAddFriend} disabled={!friendName}>
+            +
+          </button>
         </div>
-        <Friends friends={data.friends} />
+        <Friends
+          friends={data.friends}
+          handleRemoveFriend={handleRemoveFriend}
+        />
 
         {/*<Button size={1} color="primary" text="Add Friend" type="button" onClick={handleAddFriend} />*/}
         <button type="submit" onClick={handleSubmitForm}>
@@ -92,7 +106,11 @@ const App = () => {
         >
           <p>name: {name}</p>
           <p>age: {age}</p>
-          { friends.map(friend => <p>{friend}</p>) }
+          {friends.map(friend => (
+            <div className="row">
+              <p>{friend}</p>
+            </div>
+          ))}
         </Flex>
       )}
     </AppShell>

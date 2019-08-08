@@ -1,23 +1,34 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { Flex } from 'rebass';
 // import Button from './Button';
 
 interface FriendProps {
   friends: string[];
+  handleRemoveFriend: Function;
 }
 
 const Friends: React.FC<FriendProps> = (props: FriendProps) => {
-  const { friends } = props;
-
+  const { friends, handleRemoveFriend } = props;
   // console.log(name, age, friends);
+
+  useEffect(() => {}, [friends]);
 
   return (
     <FriendsContainer>
       {friends && (
         <ul>
           {friends.map(name => (
-            <li>{name}</li>
+            <div>
+              <li>{name}</li>
+              <button
+                // @ts-ignore
+                onClick={() => handleRemoveFriend()}
+                type="button"
+              >
+                -
+              </button>
+            </div>
           ))}
         </ul>
       )}
