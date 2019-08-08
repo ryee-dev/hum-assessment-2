@@ -8,17 +8,25 @@ interface BtnProps {
   size: number;
   type: string;
   onClick?: Function;
+  disabled?: boolean;
+  slide?: number;
+  setSlide?: Function;
+  handleNextSlide?: Function;
+  handleReset?: Function;
 }
 
 const Button: React.FC<BtnProps> = (props: BtnProps) => {
-  const { color, text, size } = props;
+  const { color, text, size, slide, handleNextSlide, handleReset } = props;
+
   return (
     <Btn
-      m={2}
       style={{
-        backgroundColor: color === 'primary' ? '#e10197' : '#999999',
-        padding: `${size / 4}rem ${size/2}rem`,
+        backgroundColor: color === 'primary' ? '#e12b98' : '#999999',
+        padding: `${size / 2}rem ${size / 1.5}rem`,
+        borderRadius: 0,
       }}
+      // @ts-ignore
+      onClick={slide < 3 ? handleNextSlide : handleReset}
     >
       {text}
     </Btn>
@@ -28,13 +36,25 @@ const Button: React.FC<BtnProps> = (props: BtnProps) => {
 export default Button;
 
 const Btn = styled(BtnBase)`
+  color: white;
+  border: none;
+  outline: none;
   transition: background-color 0.1s ease-out, color 0.1s ease-out;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  width: 100%;
+
+  &:disabled {
+    background-color: #999999;
+    color: white;
+  }
 
   &:hover {
     background-color: white !important;
     //border: -1px solid #e10197;
     //border-spacing: ;
-    color: #e10197;
+    color: #e12b98;
     cursor: pointer;
   }
 `;

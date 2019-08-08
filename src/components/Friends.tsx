@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import { Flex } from 'rebass';
+import { Flex, Button } from 'rebass';
+// import Button from './Button';
 // import Button from './Button';
 
 interface FriendProps {
@@ -19,22 +20,25 @@ const Friends: React.FC<FriendProps> = (props: FriendProps) => {
 
   useEffect(() => {
     console.log(friends);
-  }, []);
+  }, [friends]);
 
   return (
     <FriendsContainer>
-      {friends && (
-        <ul>
-          {friends.map((name, i) => (
-            <div key={i}>
-              <li>{name}</li>
-              <button onClick={() => handleRemoveFriend(name)} type="button">
-                -
-              </button>
-            </div>
-          ))}
-        </ul>
-      )}
+      <ul>
+        {friends.map((name, i) => (
+          <Flex
+            alignItems="flex-start"
+            justifyContent="space-between"
+            style={{ margin: '0.4rem 0' }}
+            key={i}
+          >
+            <li style={{ marginRight: '1rem' }}>{name}</li>
+            <Button onClick={() => handleRemoveFriend(name)} type="button">
+              -
+            </Button>
+          </Flex>
+        ))}
+      </ul>
     </FriendsContainer>
   );
 };
@@ -47,4 +51,19 @@ const FriendsContainer = styled(Flex)`
   justify-content: flex-start;
   flex-direction: column;
   box-sizing: border-box;
+
+  button {
+    background-color: #e12b98;
+    color: white;
+    border-radius: 0 !important;
+    height: 100%;
+    font-weight: bold;
+    transition: background-color 0.1s ease-out, color 0.1s ease-in;
+
+    &:hover {
+      cursor: pointer;
+      background-color: white;
+      color: #e12b98;
+    }
+  }
 `;

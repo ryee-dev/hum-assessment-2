@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+// import { useSpring, animated as a } from 'react-spring';
 import { Flex } from 'rebass';
 import './App.css';
-// import Form from './components/Form';
-// import Friends from './components/Friends';
 import SlideA from './views/SlideA';
 import SlideB from './views/SlideB';
 import SlideC from './views/SlideC';
-// import Button from './components/Button';
 
 const App = () => {
   const [slide, setSlide] = useState(1);
@@ -23,9 +21,6 @@ const App = () => {
   const [friends, setFriends] = useState([]);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  // @ts-ignore
-  // const { name, age, friends } = data;
-
   const handleFriendName = (e: { target: { value: string } }) => {
     setFriendName(e.target.value);
   };
@@ -34,7 +29,6 @@ const App = () => {
     // @ts-ignore
     setFriends([...friends, friendName]);
     setFriendName('');
-    // console.log('friends:', friends);
   };
 
   const handleSubmitForm = (e: { preventDefault: () => void }) => {
@@ -42,27 +36,28 @@ const App = () => {
     setTimeout(() => {
       setSlide(slide + 1);
       setIsSubmitted(true);
-      // setFriends(friends);
       setData({
         name: name,
         age: age,
         friends,
       });
     }, 1000);
-    // setIsSubmitted(true);
+    console.log(data, slide);
   };
 
   useEffect(() => {
-    // setFriends([...friends]);
-
     setData({
       name: name,
       age: age,
       friends,
     });
+  }, [name, age, friends]);
 
-    console.log('data.friends:', data.friends);
-  }, []);
+  // const transitions = useTransition(slide, p => p, {
+  //   from: { opacity: 0, transform: 'translate3d(100%, 0 ,0)' },
+  //   enter: { opacity: 1, transform: 'translate3d(0%, 0, 0)' },
+  //   leave: { opacity: 0, transform: 'translate3d(-50%, 0, 0)' },
+  // });
 
   return (
     <AppShell className="App">
@@ -97,6 +92,9 @@ const App = () => {
             age={age}
             isSubmitted={isSubmitted}
             setSlide={setSlide}
+            setFriends={setFriends}
+            setName={setName}
+            setAge={setAge}
           />
         )}
       </SlideWrapper>
@@ -119,9 +117,23 @@ const AppShell = styled(Flex)`
 `;
 
 const SlideWrapper = styled(Flex)`
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  height: 100%;
-  width: 100%;
+  div {
+    display: flex;
+
+    &.row {
+      align-items: center;
+      justify-content: center;
+      margin: 0.6rem 0;
+    }
+
+    &.column {
+      align-items: flex-start;
+      justify-content: center;
+      flex-direction: column;
+    }
+  }
+
+  input {
+    padding: 0.6rem;
+  }
 `;
